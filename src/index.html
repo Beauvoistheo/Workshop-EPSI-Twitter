@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV to Social Media Table</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-DKPxBv02e6I1h3bxpGe1V7c6IYMD2s4MIb8Xo6kVTVw1HovP+0PB4s5n2n6P53u6x/YYo1DR9FjBcP50G82sUQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .post-card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .like-button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .liked i {
+            color: red;
+        }
+
+        .blur-text {
+            filter: blur(5px);
+            color: rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+        }
+
+        .hidden-text {
+            display: none;
+        }
+
+        /* Modern Toggle Button Style */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .toggle-label {
+            font-size: 1rem;
+            margin-right: 15px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .toggle-button {
+            width: 60px;
+            height: 30px;
+            background-color: #ddd;
+            border-radius: 50px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-button.active {
+            background-color: #4CAF50;
+        }
+
+        .toggle-knob {
+            width: 28px;
+            height: 28px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            transition: left 0.3s ease;
+        }
+
+        .toggle-button.active .toggle-knob {
+            left: 31px;
+        }
+    </style>
+</head>
+<body>
+    <h2>CSV to Social Media Table</h2>
+    <input type="file" id="csvFileInput" accept=".csv" />
+    
+    <!-- Modern Toggle Button Container -->
+    <div class="toggle-container">
+        <span class="toggle-label">Blur Content:</span>
+        <div id="toggleBlurButton" class="toggle-button">
+            <div class="toggle-knob"></div>
+        </div>
+    </div>
+
+    <div id="csvTable"></div>
+
+    <script>
+        let blurActive = false; // Track blur state
+
+        document.getElementById('csvFileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const text = e.target.result;
+                    displayCSVData(text);
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        function displayCSVData(csv) {
+            const lines = csv.split("\n");
+            const container = document.getElementById("csvTable");
+
+            container.innerHTML = '';
+
+            const headers = lines[0].split(";").map(header => header.trim());
+
+            for (let i = 1; i < lines.length; i++) {
+                const row = lines[i].trim(); 
+                if (row === "" || row.split(";").every(cell => cell.trim() === "")) {
+                    continue; 
+                }
+
+                const cells = row.split(";").map(cell => cell.trim()); 
+
+                const postCard = document.createElement("div");
+                postCard.className = "post-card";
+
+                let contentFoundNegative = false;
+
+                cells.forEach((cell, index) => {
+                    const p = document.createElement("p");
+
+                    if (cell === "Negative") {
+                        contentFoundNegative = true; 
+                    }
+
+                    p.textContent = cell; 
+
+                    if (contentFoundNegative && index > headers.indexOf("émotion") && blurActive) {
+                        p.classList.add('blur-text'); 
+                    }
+
+                    postCard.appendChild(p);
+                });
+ // Add like button
+ const likeButton = document.createElement("button");
+                likeButton.innerHTML = '<i class="fas fa-heart"></i> <span class="hide-text">Like</span>';
+                likeButton.className = "like-button";
+                likeButton.onclick = function() {
+                    this.classList.toggle("liked");
+                    const heartIcon = this.querySelector("i");
+                    heartIcon.style.color = this.classList.contains("liked") ? "red" : "black";
+                };
+
+                postCard.appendChild(likeButton);
+                container.appendChild(postCard);
+            }
+        }
+
+        
+        document.getElementById('toggleBlurButton').addEventListener('click', function() {
+            blurActive = !blurActive; // Toggle blur state
+            this.classList.toggle('active'); // Change button style
+
+            const postCards = document.querySelectorAll('.post-card');
+            postCards.forEach(postCard => {
+                blurNegativeContent(postCard);
+            });
+        });
+
+        function blurNegativeContent(postCard) {
+            const paragraphs = postCard.querySelectorAll('p'); 
+            let blurMode = false;
+
+            paragraphs.forEach((p) => {
+                if (p.textContent === "Negative") {
+                    blurMode = true;
+                }
+                if (blurMode) {
+                    if (blurActive) {
+                        p.classList.add('blur-text'); 
+                    } else {
+                        p.classList.remove('blur-text'); 
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

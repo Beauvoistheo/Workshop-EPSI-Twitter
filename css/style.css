@@ -1,0 +1,259 @@
+table {
+    max-width: 10em;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid black;
+}
+th, td {
+    padding: 8px;
+    text-align: left; 
+    column-width: 30em;
+    word-wrap: break-word;
+   
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    border-left: 150px solid #4267B2; /* Bordure gauche */
+    border-right: 150px solid #4267B2; /* Bordure droite */
+    margin: 0; /* Supprime les marges par défaut */
+    padding: 20px; /* Ajoute un padding pour espacer le contenu de la bordure */
+    border-top: 5px solid black; /* Bordure en haut */
+
+}
+
+h2 {
+    text-align: center;
+    color: #4267B2; /* Facebook Blue */
+    margin-bottom: 20px;
+}
+
+#csvFileInput {
+    display: block;
+    margin: 0 auto 20px;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+    width: 50%;
+    cursor: pointer;
+}
+
+#csvFileInput:focus {
+    border-color: #4267B2; /* Focus Blue */
+    outline: none;
+}
+
+#csvTable {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between posts */
+    max-width: 800px; /* Optional: limit the maximum width */
+    margin: 0 auto; /* Center the table */
+}
+
+.post-card {
+    border: 1px solid #ddd; /* Border for posts */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px; /* Padding inside cards */
+    background-color: white; /* Background color */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
+}
+
+.post-card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.post-card p {
+    margin: 0;
+    padding: 5px 0;
+    color: #333;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #777;
+}
+
+/* Button style */
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #4267B2; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #365899; /* Darker shade */
+}
+
+@media (max-width: 600px) {
+    #csvFileInput {
+        width: 80%;
+        font-size: 14px;
+    }
+
+    .post-card {
+        max-width: 100%; /* Full width on small screens */
+    }
+}
+
+.like-button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #4267B2; /* Button Blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+    background: url('heart-line\ \(1\).svg') no-repeat 50%;
+}
+.hide-text {
+    visibility: hidden;
+  
+}
+
+
+.liked {
+    background-color: #ff4081; /* Pink color when liked */
+}
+.switch {
+    position: fixed; /* Positionne le bouton à un endroit fixe */
+    display: flex;
+    flex-direction: column;
+    right: 223px; /* Distance du bord droit */
+    top: 100px; /* Distance du bord supérieur */
+    z-index: 1000; /* S'assure que le bouton est au-dessus d'autres éléments */
+}
+
+.switch input {
+    appearance: none;
+}
+
+.slider {
+    cursor: pointer;
+    width: 30px;
+    height: 16px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #7d7575;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: orange;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px orange;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(13px);
+    -ms-transform: translateX(13px);
+    transform: translateX(13px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+.switch2 {
+    position: fixed; /* Positionne le bouton à un endroit fixe */
+    display: flex;
+    flex-direction: column;
+    right: 170px; /* Distance du bord droit */
+    top: 50px; /* Distance du bord supérieur */
+    z-index: 1000; /* S'assure que le bouton est au-dessus d'autres éléments */
+}
+
+.switch2 input {
+    appearance: none;
+}
+
+.slider2 {
+    cursor: pointer;
+    width: 30px;
+    height: 16px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #7d7575;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider2:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider2 {
+    background-color: orange;
+}
+
+input:focus+.slider2 {
+    box-shadow: 0 0 1px orange;
+}
+
+input:checked+.slider2:before {
+    -webkit-transform: translateX(13px);
+    -ms-transform: translateX(13px);
+    transform: translateX(13px);
+}
+
+.slider2.round {
+    border-radius: 34px;
+}
+
+.slider2.round:before {
+    border-radius: 50%;
+}
+
+.blur-text {
+    filter: blur(0.5em);
+}
